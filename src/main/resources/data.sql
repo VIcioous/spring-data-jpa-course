@@ -1,0 +1,1 @@
+INSERT INTO app_user values ('admin','admin','danielox3@o2.pl','muda','USER','true','true');

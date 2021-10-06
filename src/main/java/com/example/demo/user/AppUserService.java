@@ -1,7 +1,7 @@
 package com.example.demo.user;
 
-import com.example.demo.registration.registration_token.ConfirmationToken;
-import com.example.demo.registration.registration_token.ConfirmationTokenService;
+import com.example.demo.user.registration.registration_token.ConfirmationToken;
+import com.example.demo.user.registration.registration_token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +32,6 @@ public class AppUserService implements UserDetailsService {
     public String signUpUser(AppUser appUser){
         saveUserToRepository(appUser);
         String token = generateActivationMail(appUser);
-
         return token;
     }
     private void saveUserToRepository(AppUser appUser) {
@@ -58,12 +57,10 @@ public class AppUserService implements UserDetailsService {
                 appUser
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-
-        //TODO: SEND NUDES
         return token;
     }
 
-    public int enableAppUser(String email) {
-        return repository.enableAppUser(email);
+    public void enableAppUser(String email) {
+        repository.enableAppUser(email);
     }
 }

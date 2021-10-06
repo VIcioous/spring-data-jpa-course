@@ -22,12 +22,12 @@ import java.util.Collections;
 public class AppUser implements UserDetails {
 
 
-
-    @SequenceGenerator(name = "user_Sequence",
-    sequenceName = "user_Sequence"
-    ,allocationSize = 1)
-   @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_Sequence")
+    @SequenceGenerator( name = "user_Sequence",
+                        sequenceName = "user_Sequence",
+                        allocationSize = 1)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator = "user_Sequence")
     private Long id;
     private String name;
     private String surname;
@@ -47,14 +47,14 @@ public class AppUser implements UserDetails {
                    String email,
                    String password,
                    UserType userType
-) {
+    ) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.userType = userType;
         this.isEnabled = false;
-        this.isUnlocked= true;
+        this.isUnlocked = true;
 
     }
 

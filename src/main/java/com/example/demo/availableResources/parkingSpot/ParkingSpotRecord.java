@@ -1,6 +1,7 @@
 package com.example.demo.availableResources.parkingSpot;
 
 
+import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,9 @@ public class ParkingSpotRecord {
     private String name;
     private ParkingType type;
     private boolean isAvailable;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_unit_id",nullable = false)
+    private OrganizationUnit organizationUnit;
 }
 

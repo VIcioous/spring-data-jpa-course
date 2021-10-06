@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @EnableSwagger2
+@RequestMapping("api/v1/")
 @RequiredArgsConstructor
 public class DeskController {
 

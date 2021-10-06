@@ -8,4 +8,5 @@ import lombok.Setter;
 public class ConferenceRoomDTO {
     private String name;
     private String numberOfSeats;
+
 }

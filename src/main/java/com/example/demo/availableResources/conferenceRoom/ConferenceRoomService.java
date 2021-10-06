@@ -47,7 +47,6 @@ public class ConferenceRoomService {
 
     public void deleteConferenceRoom(Long id) {
         ConferenceRoomRecord record = entityManager.find(ConferenceRoomRecord.class, id);
-
         if (record != null) {
             entityManager.getTransaction().begin();
             entityManager.remove(record);

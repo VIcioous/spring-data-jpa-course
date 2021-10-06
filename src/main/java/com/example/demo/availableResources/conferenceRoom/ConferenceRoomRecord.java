@@ -1,6 +1,7 @@
 package com.example.demo.availableResources.conferenceRoom;
 
 
+import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,9 @@ public class ConferenceRoomRecord {
     private String name;
     private String numberOfSeats;
     private boolean isAvailable;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_unit_id", nullable = false)
+    private OrganizationUnit organizationUnit;
 }
 

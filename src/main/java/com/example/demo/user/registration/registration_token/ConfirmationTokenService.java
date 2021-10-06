@@ -1,4 +1,4 @@
-package com.example.demo.registration.registration_token;
+package com.example.demo.user.registration.registration_token;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,6 @@ public class ConfirmationTokenService   {
     public Optional<ConfirmationToken> getToken(String token) {
         return repository.findByToken(token);
     }
-
     public int setConfirmedAt(String token) {
         return repository.updateConfirmedAt(
                 token, LocalDateTime.now());

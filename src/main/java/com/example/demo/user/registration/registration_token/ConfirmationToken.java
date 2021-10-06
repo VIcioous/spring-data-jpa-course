@@ -1,4 +1,4 @@
-package com.example.demo.registration.registration_token;
+package com.example.demo.user.registration.registration_token;
 
 import com.example.demo.user.AppUser;
 import lombok.Getter;

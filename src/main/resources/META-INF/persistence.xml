@@ -10,6 +10,7 @@
         <class>com.example.demo.availableResources.desk.DeskRecord</class>
         <class>com.example.demo.availableResources.parkingSpot.ParkingSpotRecord</class>
         <class>com.example.demo.user.AppUser</class>
+        <class>com.example.demo.availableResources.organizationUnit.OrganizationUnit</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/reservations" /> <!-- BD Mane -->

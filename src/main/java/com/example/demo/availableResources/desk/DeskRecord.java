@@ -1,6 +1,7 @@
 package com.example.demo.availableResources.desk;
 
 
+import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +18,9 @@ public class DeskRecord {
     private Long id;
     private String name;
     private boolean isAvailable;
+
+    @ManyToOne
+    @JoinColumn(name = "organization_unit_id",nullable = false)
+    private OrganizationUnit organizationUnit;
 }
 
