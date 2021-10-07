@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.conferenceRoom;
+package com.example.demo.availableResources.organizationUnit.conferenceRoom;
 
 
 import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
@@ -20,8 +20,8 @@ public class ConferenceRoomRecord {
     private String numberOfSeats;
     private boolean isAvailable;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_unit_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_unit_id", referencedColumnName = "id")
     private OrganizationUnit organizationUnit;
 }
 

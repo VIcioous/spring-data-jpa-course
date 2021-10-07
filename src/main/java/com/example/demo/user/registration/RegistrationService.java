@@ -1,11 +1,11 @@
 package com.example.demo.user.registration;
 
-import com.example.demo.user.email.EmailSender;
-import com.example.demo.user.registration.registration_token.ConfirmationToken;
-import com.example.demo.user.registration.registration_token.ConfirmationTokenService;
 import com.example.demo.user.AppUser;
 import com.example.demo.user.AppUserService;
 import com.example.demo.user.UserType;
+import com.example.demo.user.email.EmailSender;
+import com.example.demo.user.registration.registration_token.ConfirmationToken;
+import com.example.demo.user.registration.registration_token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +59,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         appUserService.enableAppUser(
                 confirmationToken.getAppUser().getEmail());
-        return "confirmed";
+        return confirmationToken.getAppUser().getEmail();
     }
 
     private void checkExpirationOfToken(ConfirmationToken confirmationToken) {

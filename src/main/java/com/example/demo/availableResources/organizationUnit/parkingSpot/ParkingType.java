@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.parkingSpot;
+package com.example.demo.availableResources.organizationUnit.parkingSpot;
 
 public enum ParkingType {
     NORMAL,

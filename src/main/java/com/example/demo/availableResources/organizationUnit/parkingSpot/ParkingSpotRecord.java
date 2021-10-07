@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.parkingSpot;
+package com.example.demo.availableResources.organizationUnit.parkingSpot;
 
 
 import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
@@ -20,8 +20,8 @@ public class ParkingSpotRecord {
     private ParkingType type;
     private boolean isAvailable;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_unit_id",nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_unit_id", referencedColumnName = "id")
     private OrganizationUnit organizationUnit;
 }
 

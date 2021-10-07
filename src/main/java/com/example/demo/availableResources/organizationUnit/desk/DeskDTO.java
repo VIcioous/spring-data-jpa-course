@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.desk;
+package com.example.demo.availableResources.organizationUnit.desk;
 
 import lombok.Getter;
 import lombok.Setter;

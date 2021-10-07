@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -14,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @RequiredArgsConstructor
 public class OrganizationUnitController {
 
-private final OrganizationUnitService organizationUnitService;
+    private final OrganizationUnitService organizationUnitService;
 
     @PostMapping("/Unit")
     @ResponseStatus(HttpStatus.OK)
@@ -25,7 +27,7 @@ private final OrganizationUnitService organizationUnitService;
     @PutMapping("/Unit")
     @ResponseStatus(HttpStatus.OK)
     public void updateUnit(@RequestBody OrganizationUnitDTO organizationUnitDTO, @PathVariable Long id) {
-         organizationUnitService.updateOrganizationUnit(organizationUnitDTO,id);
+        organizationUnitService.updateOrganizationUnit(organizationUnitDTO, id);
     }
 
     @DeleteMapping("/Unit")
@@ -36,16 +38,15 @@ private final OrganizationUnitService organizationUnitService;
 
     @GetMapping("/Unit/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void getUnit(@PathVariable Long id) {
-        organizationUnitService.getOrganizationUnit(id);
+    public Optional<OrganizationUnit> getUnit(@PathVariable Long id) {
+        return organizationUnitService.getOrganizationUnit(id);
     }
 
     @GetMapping("/Unit")
     @ResponseStatus(HttpStatus.OK)
-    public void getAllUnits() {
-        organizationUnitService.getAllOrganizationUnits();
+    public List<OrganizationUnit> getAllUnits() {
+        return organizationUnitService.getAllOrganizationUnits();
     }
-
 
 
 }

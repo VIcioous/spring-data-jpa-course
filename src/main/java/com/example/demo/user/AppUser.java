@@ -22,12 +22,12 @@ import java.util.Collections;
 public class AppUser implements UserDetails {
 
 
-    @SequenceGenerator( name = "user_Sequence",
-                        sequenceName = "user_Sequence",
-                        allocationSize = 1)
+    @SequenceGenerator(name = "user_Sequence",
+            sequenceName = "user_Sequence",
+            allocationSize = 1)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator = "user_Sequence")
+            generator = "user_Sequence")
     private Long id;
     private String name;
     private String surname;
@@ -71,7 +71,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
@@ -93,4 +93,6 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
+
 }

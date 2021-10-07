@@ -1,15 +1,14 @@
 package com.example.demo.availableResources.organizationUnit;
 
 
-
-import com.example.demo.availableResources.conferenceRoom.ConferenceRoomRecord;
-import com.example.demo.availableResources.desk.DeskRecord;
-import com.example.demo.availableResources.parkingSpot.ParkingSpotRecord;
+import com.example.demo.availableResources.organizationUnit.conferenceRoom.ConferenceRoomRecord;
+import com.example.demo.availableResources.organizationUnit.desk.DeskRecord;
+import com.example.demo.availableResources.organizationUnit.parkingSpot.ParkingSpotRecord;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,16 +20,17 @@ import java.util.Set;
 public class OrganizationUnit {
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "organizationUnit")
     private Set<ConferenceRoomRecord> conferenceRooms = new HashSet<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "organizationUnit")
     private Set<DeskRecord> desks = new HashSet<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "organizationUnit")
     private Set<ParkingSpotRecord> parkingSpots = new HashSet<>();
 

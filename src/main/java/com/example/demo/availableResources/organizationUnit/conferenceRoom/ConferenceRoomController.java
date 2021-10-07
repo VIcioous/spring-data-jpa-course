@@ -1,6 +1,8 @@
-package com.example.demo.availableResources.conferenceRoom;
+package com.example.demo.availableResources.organizationUnit.conferenceRoom;
 
 
+import com.example.demo.availableResources.organizationUnit.AssignableResourceService;
+import com.example.demo.availableResources.organizationUnit.ResourceToUnitAssignmentData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,35 +18,41 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConferenceRoomController {
 
-    private final ConferenceRoomService conferenceRoomService;
+    private final AssignableResourceService<ConferenceRoomDTO, ConferenceRoomRecord> conferenceRoomService;
 
     @PostMapping("/ConferenceRoom")
     @ResponseStatus(HttpStatus.OK)
     public Long addConferenceRoom(@RequestBody ConferenceRoomDTO conferenceRoomDTO) {
-        return conferenceRoomService.addConferenceRoom(conferenceRoomDTO);
+        return conferenceRoomService.add(conferenceRoomDTO);
     }
 
     @PutMapping("/ConferenceRoom")
     @ResponseStatus(HttpStatus.OK)
     public void updateConferenceRoom(@RequestBody ConferenceRoomDTO conferenceRoomDTO, @RequestParam Long id) {
-        conferenceRoomService.updateConferenceRoom(conferenceRoomDTO, id);
+        conferenceRoomService.update(conferenceRoomDTO, id);
     }
 
     @DeleteMapping("/ConferenceRoom")
     @ResponseStatus(HttpStatus.OK)
     public void deleteConferenceRoom(@RequestParam Long id) {
-        conferenceRoomService.deleteConferenceRoom(id);
+        conferenceRoomService.delete(id);
     }
 
     @GetMapping("/ConferenceRoom/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<ConferenceRoomRecord> getConferenceRoom(@PathVariable Long id) {
-        return conferenceRoomService.getConferenceRoom(id);
+        return conferenceRoomService.get(id);
     }
 
     @GetMapping("/ConferenceRoom")
     @ResponseStatus(HttpStatus.OK)
     public List<ConferenceRoomRecord> getAllConferenceRoom() {
-        return conferenceRoomService.getAllConferenceRoom();
+        return conferenceRoomService.getAll();
+    }
+
+    @PutMapping("/ConferenceRoom/Assign")
+    @ResponseStatus(HttpStatus.OK)
+    public void assignConferenceRoomToUnit(@RequestBody ResourceToUnitAssignmentData assignmentData) {
+        conferenceRoomService.assignToUnit(assignmentData);
     }
 }

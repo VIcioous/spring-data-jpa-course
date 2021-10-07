@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.conferenceRoom;
+package com.example.demo.availableResources.organizationUnit.conferenceRoom;
 
 
 import com.example.demo.availableResources.IncorrectDataException;

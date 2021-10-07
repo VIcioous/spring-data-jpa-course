@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.parkingSpot;
+package com.example.demo.availableResources.organizationUnit.parkingSpot;
 
 
 import com.example.demo.availableResources.IncorrectDataException;

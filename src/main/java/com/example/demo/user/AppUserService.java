@@ -3,6 +3,7 @@ package com.example.demo.user;
 import com.example.demo.user.registration.registration_token.ConfirmationToken;
 import com.example.demo.user.registration.registration_token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,30 +23,34 @@ public class AppUserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
+
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email)  {
         return repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND, email)));
     }
 
-    public String signUpUser(AppUser appUser){
+
+
+    public String signUpUser(AppUser appUser) {
         saveUserToRepository(appUser);
         String token = generateActivationMail(appUser);
         return token;
     }
+
     private void saveUserToRepository(AppUser appUser) {
-        boolean userExists =  repository.
+        boolean userExists = repository.
                 findByEmail(appUser.getEmail())
                 .isPresent();
-        if(userExists)
-        {
+        if (userExists) {
             throw new IllegalStateException("Email Already Taken");
         }
-        String encodedPassword=bCryptPasswordEncoder
+        String encodedPassword = bCryptPasswordEncoder
                 .encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
         repository.save(appUser);
+
     }
 
     private String generateActivationMail(AppUser appUser) {
@@ -63,4 +68,6 @@ public class AppUserService implements UserDetailsService {
     public void enableAppUser(String email) {
         repository.enableAppUser(email);
     }
+
+
 }

@@ -1,60 +1,52 @@
 package com.example.demo.availableResources.organizationUnit;
 
-
 import com.example.demo.availableResources.RecordNotFoundException;
-import com.example.demo.availableResources.conferenceRoom.ConferenceRoomRecord;
+import com.example.demo.availableResources.organizationUnit.desk.DeskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OrganizationUnitService {
-
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Resource");
-    private final EntityManager entityManager = emf.createEntityManager();
+    private final OrganizationUnitRepository organizationUnitRepository;
+    private final DeskRepository deskRepository;
     private final OrganizationUnitValidator validator;
 
     public Long addOrganizationUnit(OrganizationUnitDTO organizationUnitDTO) {
-        entityManager.getTransaction().begin();
         validator.validateOrganizationUnitDTO(organizationUnitDTO);
         OrganizationUnit record = new OrganizationUnit();
         record.setTitle(organizationUnitDTO.getName());
-        entityManager.persist(record);
-        entityManager.getTransaction().commit();
+        organizationUnitRepository.save(record);
         return record.getId();
     }
 
     public void updateOrganizationUnit(OrganizationUnitDTO organizationUnitDTO, Long id) {
         validator.validateOrganizationUnitDTO(organizationUnitDTO);
-        OrganizationUnit record = entityManager.find(OrganizationUnit.class, id);
-        if (record != null) {
-            entityManager.getTransaction().begin();
-            record.setTitle(organizationUnitDTO.getName());
-            entityManager.getTransaction().commit();
-        } else throw new RecordNotFoundException("Record Not Found");
+        OrganizationUnit record = findOrganizationUnitInRepository(id);
+        record.setTitle(organizationUnitDTO.getName());
+        organizationUnitRepository.save(record);
     }
 
     public void deleteOrganizationUnit(Long id) {
-        OrganizationUnit record = entityManager.find(OrganizationUnit.class, id);
-        if (record != null) {
-            entityManager.getTransaction().begin();
-            entityManager.remove(record);
-            entityManager.getTransaction().commit();
-        }
+        OrganizationUnit record = findOrganizationUnitInRepository(id);
+        organizationUnitRepository.delete(record);
     }
 
     public Optional<OrganizationUnit> getOrganizationUnit(Long id) {
-        OrganizationUnit record = entityManager.find(OrganizationUnit.class, id);
-        return Optional.ofNullable(record);
+        return organizationUnitRepository.findById(id);
     }
 
     public List<OrganizationUnit> getAllOrganizationUnits() {
-        return entityManager.createQuery("from OrganizationUnit").getResultList();
+        return organizationUnitRepository.findAll();
     }
+
+    private OrganizationUnit findOrganizationUnitInRepository(Long id) {
+        return organizationUnitRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Not Found Organization Unit"));
+    }
+
+
 }

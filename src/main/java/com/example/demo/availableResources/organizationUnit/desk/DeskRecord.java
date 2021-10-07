@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.desk;
+package com.example.demo.availableResources.organizationUnit.desk;
 
 
 import com.example.demo.availableResources.organizationUnit.OrganizationUnit;
@@ -19,8 +19,8 @@ public class DeskRecord {
     private String name;
     private boolean isAvailable;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_unit_id",nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_unit_id", referencedColumnName = "id")
     private OrganizationUnit organizationUnit;
 }
 

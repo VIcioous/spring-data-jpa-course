@@ -6,9 +6,9 @@
 
     <persistence-unit name="Resource" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.example.demo.availableResources.conferenceRoom.ConferenceRoomRecord</class>
-        <class>com.example.demo.availableResources.desk.DeskRecord</class>
-        <class>com.example.demo.availableResources.parkingSpot.ParkingSpotRecord</class>
+        <class>com.example.demo.availableResources.organizationUnit.conferenceRoom.ConferenceRoomRecord</class>
+        <class>com.example.demo.availableResources.organizationUnit.desk.DeskRecord</class>
+        <class>com.example.demo.availableResources.organizationUnit.parkingSpot.ParkingSpotRecord</class>
         <class>com.example.demo.user.AppUser</class>
         <class>com.example.demo.availableResources.organizationUnit.OrganizationUnit</class>
         <properties>
