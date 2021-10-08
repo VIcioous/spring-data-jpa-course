@@ -1,4 +1,4 @@
-package com.example.demo.availableResources.organizationUnit;
+package com.example.demo.organizationUnit;
 
 import lombok.Getter;
 

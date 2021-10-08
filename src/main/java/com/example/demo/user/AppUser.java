@@ -1,6 +1,7 @@
 package com.example.demo.user;
 
-import lombok.EqualsAndHashCode;
+import com.example.demo.reservation.Reservation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,12 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
 @Table(name = "app_user")
 public class AppUser implements UserDetails {
@@ -32,6 +34,7 @@ public class AppUser implements UserDetails {
     private String name;
     private String surname;
     private String email;
+    @JsonIgnore
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
@@ -41,6 +44,11 @@ public class AppUser implements UserDetails {
     private boolean isUnlocked;
     @Column(name = "is_enabled")
     private boolean isEnabled;
+
+    private int blames;
+@JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<Reservation> listOfReservations;
 
     public AppUser(String name,
                    String surname,
@@ -55,7 +63,8 @@ public class AppUser implements UserDetails {
         this.userType = userType;
         this.isEnabled = false;
         this.isUnlocked = true;
-
+        this.blames = 0;
+        this.listOfReservations = new HashSet<>();
     }
 
     @Override

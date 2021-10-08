@@ -1,7 +1,7 @@
-package com.example.demo.availableResources.organizationUnit;
+package com.example.demo.organizationUnit;
 
-import com.example.demo.availableResources.RecordNotFoundException;
-import com.example.demo.availableResources.organizationUnit.desk.DeskRepository;
+import com.example.demo.RecordNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrganizationUnitService {
     private final OrganizationUnitRepository organizationUnitRepository;
-    private final DeskRepository deskRepository;
     private final OrganizationUnitValidator validator;
 
     public Long addOrganizationUnit(OrganizationUnitDTO organizationUnitDTO) {

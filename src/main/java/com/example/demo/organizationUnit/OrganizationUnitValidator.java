@@ -1,6 +1,6 @@
-package com.example.demo.availableResources.organizationUnit;
+package com.example.demo.organizationUnit;
 
-import com.example.demo.availableResources.IncorrectDataException;
+import com.example.demo.IncorrectDataException;
 import org.springframework.stereotype.Service;
 
 @Service

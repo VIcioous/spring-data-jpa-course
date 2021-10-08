@@ -1,8 +1,8 @@
-package com.example.demo.availableResources.organizationUnit.parkingSpot;
+package com.example.demo.organizationUnit.parkingSpot;
 
 
-import com.example.demo.availableResources.organizationUnit.AssignableResourceService;
-import com.example.demo.availableResources.organizationUnit.ResourceToUnitAssignmentData;
+import com.example.demo.organizationUnit.AssignableResourceService;
+import com.example.demo.organizationUnit.ResourceToUnitAssignmentData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ParkingSpotController {
 
-    private final AssignableResourceService<ParkingSpotDTO, ParkingSpotRecord> parkingSpotService;
+    private final AssignableResourceService<ParkingSpotDTO, ParkingSpot> parkingSpotService;
 
     @PostMapping("/ParkingSpot")
     @ResponseStatus(HttpStatus.OK)
@@ -40,13 +40,13 @@ public class ParkingSpotController {
 
     @GetMapping("/ParkingSpot/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<ParkingSpotRecord> getParkingSpot(@PathVariable Long id) {
+    public Optional<ParkingSpot> getParkingSpot(@PathVariable Long id) {
         return parkingSpotService.get(id);
     }
 
     @GetMapping("/ParkingSpot/")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParkingSpotRecord> getAllParkingSpot() {
+    public List<ParkingSpot> getAllParkingSpot() {
         return parkingSpotService.getAll();
     }
 
@@ -54,8 +54,6 @@ public class ParkingSpotController {
     @ResponseStatus(HttpStatus.OK)
     public void assignParkingSpotToUnit(@RequestBody ResourceToUnitAssignmentData assignmentData) {
         parkingSpotService.assignToUnit(assignmentData);
-
-
     }
 
 
