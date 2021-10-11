@@ -1,4 +1,4 @@
-package com.example.demo.organizationUnit;
+package com.example.demo.parkingSpot;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +15,7 @@ public interface AssignableResourceService<T, D> {
 
     List<D> getAll();
 
-    void assignToUnit(ResourceToUnitAssignmentData assignmentData);
+
 
 
 }

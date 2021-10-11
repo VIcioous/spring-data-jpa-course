@@ -9,6 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class RecordNotFoundException extends RuntimeException {
     public RecordNotFoundException(String s) {
         log.info(s);
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,s);
     }
 }

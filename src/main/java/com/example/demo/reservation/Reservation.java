@@ -1,6 +1,6 @@
 package com.example.demo.reservation;
 
-import com.example.demo.organizationUnit.parkingSpot.ParkingSpot;
+import com.example.demo.parkingSpot.ParkingSpot;
 import com.example.demo.user.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

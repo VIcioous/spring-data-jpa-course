@@ -8,7 +8,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.example.demo.availableResources.organizationUnit.conferenceRoom.ConferenceRoomRecord</class>
         <class>com.example.demo.availableResources.organizationUnit.desk.DeskRecord</class>
-        <class>com.example.demo.organizationUnit.parkingSpot.ParkingSpot</class>
+        <class>com.example.demo.parkingSpot.ParkingSpot</class>
         <class>com.example.demo.user.AppUser</class>
         <class>com.example.demo.organizationUnit.OrganizationUnit</class>
         <properties>

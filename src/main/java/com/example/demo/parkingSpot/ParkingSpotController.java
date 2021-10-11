@@ -1,8 +1,6 @@
-package com.example.demo.organizationUnit.parkingSpot;
+package com.example.demo.parkingSpot;
 
 
-import com.example.demo.organizationUnit.AssignableResourceService;
-import com.example.demo.organizationUnit.ResourceToUnitAssignmentData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -50,11 +48,7 @@ public class ParkingSpotController {
         return parkingSpotService.getAll();
     }
 
-    @PutMapping("/ParkingSpot/Assign")
-    @ResponseStatus(HttpStatus.OK)
-    public void assignParkingSpotToUnit(@RequestBody ResourceToUnitAssignmentData assignmentData) {
-        parkingSpotService.assignToUnit(assignmentData);
-    }
+
 
 
 }

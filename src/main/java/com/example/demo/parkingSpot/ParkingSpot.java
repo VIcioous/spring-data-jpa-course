@@ -1,9 +1,7 @@
-package com.example.demo.organizationUnit.parkingSpot;
+package com.example.demo.parkingSpot;
 
 
-import com.example.demo.organizationUnit.OrganizationUnit;
 import com.example.demo.reservation.Reservation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,11 +20,6 @@ public class ParkingSpot {
     private Long id;
     private String name;
     private ParkingType type;
-
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "organization_unit_id", referencedColumnName = "id")
-    private OrganizationUnit organizationUnit;
 
     @OneToMany(mappedBy = "parkingSpot")
     private Set<Reservation> listOfReservations = new HashSet<>();

@@ -10,6 +10,6 @@ public class ResourceTakenException extends RuntimeException{
     public ResourceTakenException(String s)
     {
         log.info(s);
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,s);
     }
 }

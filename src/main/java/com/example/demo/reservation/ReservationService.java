@@ -3,8 +3,8 @@ package com.example.demo.reservation;
 
 import com.example.demo.RecordNotFoundException;
 import com.example.demo.UnauthorizedAccessException;
-import com.example.demo.organizationUnit.parkingSpot.ParkingSpot;
-import com.example.demo.organizationUnit.parkingSpot.ParkingSpotService;
+import com.example.demo.parkingSpot.ParkingSpot;
+import com.example.demo.parkingSpot.ParkingSpotService;
 import com.example.demo.user.AppUser;
 import com.example.demo.user.UserType;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class ReservationService {
     private final ParkingSpotService parkingSpotService;
 
 
-    public void reserveParkingSpot(ReservationRequest reservationRequest) {
+    public Long reserveParkingSpot(ReservationRequest reservationRequest) {
         ParkingSpot parkingSpot = getParkingSpot(reservationRequest.getParkingSpotId());
         List<Reservation> listOfReservations = reservationRepository.
                 findReservationsOfParkingSpot(reservationRequest.getParkingSpotId());
@@ -33,6 +33,7 @@ public class ReservationService {
         reservation.setUser(currentUser);
         setReservationData(reservationRequest, parkingSpot, reservation);
         reservationRepository.save(reservation);
+        return reservation.getId();
     }
 
     public List<Reservation> getReservations() {
@@ -44,18 +45,20 @@ public class ReservationService {
     }
 
     public void updateReservation(Long reservationId, ReservationRequest reservationRequest) {
-        ParkingSpot parkingSpot = getParkingSpot(reservationRequest.getParkingSpotId());
+        Reservation reservation = getReservationRecord(reservationId);
         AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //TODO: validate reservation data, add confirmation of reservation
-        Reservation reservation = getResrvationRecord(reservationId);
-
         authorizeAccess(currentUser, reservation);
+
+        ParkingSpot parkingSpot = getParkingSpot(reservationRequest.getParkingSpotId());
+        List<Reservation> listOfReservations = reservationRepository.
+                findReservationsOfParkingSpot(reservationRequest.getParkingSpotId());
+        validator.checkAvailabilityOfModifyingReservation(reservationRequest, listOfReservations, reservationId);
         setReservationData(reservationRequest, parkingSpot, reservation);
         reservationRepository.save(reservation);
     }
 
     public void cancelReservation(Long id) {
-        Reservation reservation = getResrvationRecord(id);
+        Reservation reservation = getReservationRecord(id);
         AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         authorizeAccess(currentUser, reservation);
         reservationRepository.delete(reservation);
@@ -69,7 +72,7 @@ public class ReservationService {
         }
     }
 
-    private Reservation getResrvationRecord(Long id) {
+    private Reservation getReservationRecord(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Reservation Not found"));
     }

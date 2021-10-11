@@ -9,8 +9,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class IncorrectDataException extends RuntimeException {
     public IncorrectDataException(String s) {
-        log.info("####SLF4J:: " + s);
-        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        log.info(s);
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,s);
     }
 
 }
