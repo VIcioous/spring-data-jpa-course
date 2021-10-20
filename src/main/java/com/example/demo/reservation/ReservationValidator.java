@@ -12,14 +12,14 @@ import java.util.List;
 @Service
 public class ReservationValidator {
     public void checkAvailabilityOfParkingSpot(ReservationRequest reservationRequest, List<Reservation> listOfReservations) {
-        if (reservationRequest.getStartOfReservation().isAfter(reservationRequest.getEndOfReservation()))
-            throw new IncorrectDataException("End of reservation is before beginning");
+        checkCorrectnessOfDates(reservationRequest);
         checkAvailability(listOfReservations, reservationRequest);
     }
 
+
+
     public void checkAvailabilityOfModifyingReservation(ReservationRequest reservationRequest, List<Reservation> listOfReservations, Long id) {
-        if (reservationRequest.getStartOfReservation().isAfter(reservationRequest.getEndOfReservation()))
-            throw new IncorrectDataException("End of reservation is before beginning");
+        checkCorrectnessOfDates(reservationRequest);
         checkAvailabilityOfModifying(listOfReservations, reservationRequest, id);
     }
 
@@ -61,6 +61,12 @@ public class ReservationValidator {
             throw new ResourceTakenException("Reservation request is inside other reservation");
         }
     }
-
+    private void checkCorrectnessOfDates(ReservationRequest reservationRequest) {
+        if (reservationRequest.getStartOfReservation().isAfter(reservationRequest.getEndOfReservation()))
+            throw new IncorrectDataException("End of reservation is before beginning");
+        if (reservationRequest.getEndOfReservation().isBefore(LocalDateTime.now()) ||
+                reservationRequest.getStartOfReservation().isBefore(LocalDateTime.now()))
+            throw new IncorrectDataException("You cant reserve parking spot from past ");
+    }
 
 }

@@ -1,16 +1,19 @@
 package com.example.demo.reservation;
 
 
+import com.example.demo.ExpiredConfirmationException;
 import com.example.demo.RecordNotFoundException;
 import com.example.demo.UnauthorizedAccessException;
 import com.example.demo.parkingSpot.ParkingSpot;
 import com.example.demo.parkingSpot.ParkingSpotService;
 import com.example.demo.user.AppUser;
+import com.example.demo.user.AppUserService;
 import com.example.demo.user.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ public class ReservationService {
     private final ReservationValidator validator;
     private final ReservationRepository reservationRepository;
     private final ParkingSpotService parkingSpotService;
+    private final AppUserService appUserService;
 
 
     public Long reserveParkingSpot(ReservationRequest reservationRequest) {
@@ -57,11 +61,42 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public void cancelReservation(Long id) {
-        Reservation reservation = getReservationRecord(id);
+    public void cancelReservation(Long reservationId) {
+        Reservation reservation = getReservationRecord(reservationId);
         AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         authorizeAccess(currentUser, reservation);
         reservationRepository.delete(reservation);
+    }
+
+    public void reportTakenReservation(Long reservationId)
+    {
+        Reservation reservation = getReservationRecord(reservationId);
+        AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        authorizeAccess(currentUser, reservation);
+        appUserService.reportTakenReservation(currentUser,reservation);
+    }
+
+    public void confirmReservation(Long reservationId)
+    {
+        Reservation reservation = getReservationRecord(reservationId);
+        AppUser currentUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        checkAuthorizationOfConfirmation(currentUser, reservation);
+        var actualTime = LocalDateTime.now();
+        if(actualTime.isAfter(reservation.getConfirmationExpireTime()))
+        {
+            throw new ExpiredConfirmationException();
+        }
+        else reservation.setConfirmed(true);
+        reservationRepository.save(reservation);
+
+    }
+
+    private void checkAuthorizationOfConfirmation(AppUser currentUser, Reservation reservation) {
+            if (!currentUser.getId().equals(reservation.getUser().getId())) {
+                appUserService.reportForTakingReservation(currentUser,reservation);
+                throw new UnauthorizedAccessException("Spierdalaj z mojej ziemi");
+            }
+
     }
 
     private void authorizeAccess(AppUser currentUser, Reservation reservation) {

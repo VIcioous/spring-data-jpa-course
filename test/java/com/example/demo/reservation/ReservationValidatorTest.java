@@ -2,8 +2,11 @@ package com.example.demo.reservation;
 
 import com.example.demo.parkingSpot.ParkingSpot;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.BufferedReader;
@@ -17,13 +20,13 @@ import java.util.List;
 
 class ReservationValidatorTest {
 
-    private List<Reservation> reservationSet = new ArrayList<>();
+    private static List<Reservation> reservationSet = new ArrayList<>();
     private ReservationValidator validator = new ReservationValidator();
 
     @ParameterizedTest
     @CsvFileSource(resources = "CorrectReservation.csv")
+    @DisplayName("This reservation should pass correctly")
     public void shouldPassValidationOfReservation(Long spotId, String start, String end) {
-        prepareReservationSet();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime s = LocalDateTime.parse(start, formatter);
         LocalDateTime e = LocalDateTime.parse(end, formatter);
@@ -34,8 +37,8 @@ class ReservationValidatorTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "CorrectModification.csv")
+    @DisplayName("This modification should pass correctly")
     public void shouldPassModifyingReservation(Long reservationId, String start, String end, Long spotId) {
-        prepareReservationSet();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime s = LocalDateTime.parse(start, formatter);
         LocalDateTime e = LocalDateTime.parse(end, formatter);
@@ -47,8 +50,8 @@ class ReservationValidatorTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "IncorrectReservation.csv")
+    @DisplayName("This Reservation should not pass")
     public void shouldThrowResponseStatusExceptionWhenReserving(Long spotId, String start, String end) {
-        prepareReservationSet();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime s = LocalDateTime.parse(start, formatter);
         LocalDateTime e = LocalDateTime.parse(end, formatter);
@@ -60,8 +63,8 @@ class ReservationValidatorTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "IncorrectModification.csv")
+    @DisplayName("This modification should not pass")
     public void shouldThrowResponseStatusExceptionWhenModifying(Long reservationId, String start, String end, Long spotID) {
-        prepareReservationSet();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime s = LocalDateTime.parse(start, formatter);
         LocalDateTime e = LocalDateTime.parse(end, formatter);
@@ -73,8 +76,8 @@ class ReservationValidatorTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "ReversedDates.csv")
+    @DisplayName("This modification should not pass because date is reversed")
     public void shouldThrowIncorrectDataException(Long reservationId, String start, String end, Long spotID) {
-        prepareReservationSet();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime s = LocalDateTime.parse(start, formatter);
         LocalDateTime e = LocalDateTime.parse(end, formatter);
@@ -87,7 +90,8 @@ class ReservationValidatorTest {
     }
 
 
-    private void prepareReservationSet() {
+    @BeforeAll
+    static void initAll() {
         String row;
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setName("Spot1");

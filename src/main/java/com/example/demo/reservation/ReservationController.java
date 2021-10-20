@@ -45,4 +45,18 @@ public class ReservationController {
     public List<Reservation> getAllReservations() {
         return reservationService.getReservations();
     }
+
+    @PutMapping("/Reservations/Confirm/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void confirmReservation(@PathVariable Long id)
+    {
+        reservationService.confirmReservation(id);
+    }
+
+    @PutMapping("/Reservations/Report/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void reportReservation(@PathVariable Long id)
+    {
+        reservationService.reportTakenReservation(id);
+    }
 }

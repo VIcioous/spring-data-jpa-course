@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,8 +45,8 @@ public class AppUser implements UserDetails {
     @Column(name = "is_enabled")
     private boolean isEnabled;
 
-    private int blames;
-@JsonIgnore
+    private int karma;
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Reservation> listOfReservations;
 
@@ -64,7 +63,7 @@ public class AppUser implements UserDetails {
         this.userType = userType;
         this.isEnabled = false;
         this.isUnlocked = true;
-        this.blames = 0;
+        this.karma = 0;
         this.listOfReservations = new HashSet<>();
     }
 
@@ -103,6 +102,7 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
 
 
 }

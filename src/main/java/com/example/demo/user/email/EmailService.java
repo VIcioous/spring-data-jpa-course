@@ -24,9 +24,9 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void send(String to, String email) {
+    public void send(String to, String email,String subject) {
         try {
-            MimeMessage message = generateMimeMessage(to, email);
+            MimeMessage message = generateMimeMessage(to, email,subject);
             mailSender.send(message);
         } catch (MessagingException e) {
             logger.error("failed to send email", e);
@@ -34,13 +34,14 @@ public class EmailService implements EmailSender {
         }
     }
 
-    private MimeMessage generateMimeMessage(String to, String email) throws MessagingException {
+
+    private MimeMessage generateMimeMessage(String to, String email, String subject) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
         helper.setText(email, true);
         helper.setTo(to);
-        helper.setSubject("Confirm Your email");
-        helper.setFrom("ciagajWoryPoBetonie@gmail.com");
+        helper.setSubject(subject);
+        helper.setFrom("reservations@britenet.gmail.com");
         return message;
     }
 }
